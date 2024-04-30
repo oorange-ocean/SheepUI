@@ -13,10 +13,9 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: 'Examples',
+        text: '通用',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'Button', link: '/components/button/' },
         ]
       }
     ],
