@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import { demoblockPlugin, demoblockVitePlugin } from 'vitepress-theme-demoblock'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Sheep-UI",
@@ -23,5 +23,13 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ]
+  },
+  markdown: {
+    config: (md) => {
+      md.use(demoblockPlugin)
+    }
+  },
+  vite: {
+    plugins: [demoblockVitePlugin()]
   }
 })
