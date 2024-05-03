@@ -5,11 +5,15 @@ export const buttonProps = {
   type: {
     type: String as PropType<ButtonType>,
     default: 'secondary'
+  },
+  size: {
+    type: String as PropType<'small' | 'medium' | 'large'>,
+    default: 'medium'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
-  // size: {
-  //   type: String as PropType<'small' | 'medium' | 'large'>,
-  //   default: 'medium'
-  // },
   
 } as const
 

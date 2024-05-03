@@ -14,7 +14,10 @@ import SButton from './button/src/button'
             <h3>title</h3>
             </template>
       </Test>
-      <s-button type="secondary"></s-button>
-      <SButton type="primary"></SButton>
+      <SButton type="primary" size="large"></SButton>
+      <SButton type="primary" ></SButton>
+      <SButton type="primary" size="small" disabled>确定</SButton>
+
+
 </template>
 

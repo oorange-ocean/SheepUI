@@ -19,6 +19,10 @@
   // 文字样式
   font-size: $s-font-size-md;
 
+  // 禁用状态
+  &[disabled] {
+    @apply cursor-not-allowed
+  }  
   // 其他样式
   transition: 
     background-color $s-animation-duration-slow $s-animation-ease-in-out-smooth,
