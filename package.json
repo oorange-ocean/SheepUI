@@ -16,7 +16,8 @@
     "docs:dev": "yarn run register:components && vitepress dev docs",
     "docs:build": "yarn run register:components && vitepress build docs",
     "docs:serve": "vitepress serve docs",
-    "register:components": "vitepress-rc"
+    "register:components": "vitepress-rc",
+    "test":"vitest"
   },
   "dependencies": {
     "vue": "^3.4.21"
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@rushstack/eslint-patch": "^1.8.0",
+    "@testing-library/vue": "^8.0.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.12.5",
@@ -36,6 +38,7 @@
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
+    "happy-dom": "^14.7.1",
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",
@@ -47,7 +50,7 @@
     "vite": "^5.2.8",
     "vitepress": "^1.1.4",
     "vitepress-theme-demoblock": "^3.0.7",
-    "vitest": "^1.4.0",
+    "vitest": "^1.5.3",
     "vue-tsc": "^2.0.11"
   }
 }
