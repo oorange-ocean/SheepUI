@@ -1,0 +1,7 @@
+{
+    "name": "sheep-ui",
+    "main": "sheep-ui.umd.js",
+    "module": "sheep-ui.es.js",
+    "keywords": ["vue3", "组件库", "tsx", "UI"],
+    "license": "ISC"
+  }

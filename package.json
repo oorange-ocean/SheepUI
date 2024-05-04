@@ -17,9 +17,11 @@
     "docs:build": "yarn run register:components && vitepress build docs",
     "docs:serve": "vitepress serve docs",
     "register:components": "vitepress-rc",
-    "test":"vitest"
+    "test": "vitest",
+    "build:components": "node ./scripts/build.cjs"
   },
   "dependencies": {
+    "fs-extra": "^11.2.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {
@@ -52,5 +54,8 @@
     "vitepress-theme-demoblock": "^3.0.7",
     "vitest": "^1.5.3",
     "vue-tsc": "^2.0.11"
+  },
+  "browser": {
+    "fs": false
   }
 }
