@@ -33,8 +33,8 @@ const createPackageJson = name => {
   const fileStr = `{
     "name": "${name ? name : '@garymurphy/tian-ui'}",
     "version":"0.0.0",
-    "main": "${name ? 'index.umd.js' : 'sheep-ui.umd.js'}",
-    "module": "${name ? 'index.umd.js' : 'sheep-ui.es.js'}",
+    "main": "${name ? 'index.umd.js' : 'tian-ui.umd.js'}",
+    "module": "${name ? 'index.umd.js' : 'tian-ui.es.js'}",
     "keywords": ["vue3", "组件库", "tsx", "UI"],
     "author":"garymurphy",
     "description":"A toy Vue.js3.0 tookkit for Web",
@@ -85,8 +85,8 @@ const buildAll = async () => {
     build: {
       lib: {
         entry: entryFile,
-        name: 'sheep-ui',
-        fileName: 'sheep-ui',
+        name: 'tian-ui',
+        fileName: 'tian-ui',
         formats: ['es', 'umd'],
       },
       outDir: outputDir,

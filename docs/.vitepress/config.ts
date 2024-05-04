@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 import { demoblockPlugin, demoblockVitePlugin } from 'vitepress-theme-demoblock'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Sheep-UI",
+  title: "tian-UI",
   description: "A VitePress Site",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

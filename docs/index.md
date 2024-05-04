@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Sheep-UI"
+  name: "tian-UI"
   text: "A VitePress Site"
   tagline: My great project tagline
   actions:
