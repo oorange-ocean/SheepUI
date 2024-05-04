@@ -43,10 +43,11 @@ export async function onCreate(args = { type: '' }) {
 
   // 输入则创建对应的内容
   try {
+    let info
     switch (type) {
       case 'component':
         // 如果是组件，我们还需要收集组件信息
-        const info = await inquirer.prompt([
+         info = await inquirer.prompt([
           {
             name: 'name',
             type: 'input',
@@ -84,5 +85,7 @@ export async function onCreate(args = { type: '' }) {
       default:
         break
     }
-  } catch (error) {}
+  } catch (error) {
+    //忽略错误
+  }
 }
