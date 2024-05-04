@@ -31,10 +31,13 @@ const rollupConfig = {
 const createPackageJson = name => {
   // 预设
   const fileStr = `{
-    "name": "${name ? name : 'sheep-ui'}",
+    "name": "${name ? name : '@garymurphy/tian-ui'}",
+    "version":"0.0.0",
     "main": "${name ? 'index.umd.js' : 'sheep-ui.umd.js'}",
     "module": "${name ? 'index.umd.js' : 'sheep-ui.es.js'}",
     "keywords": ["vue3", "组件库", "tsx", "UI"],
+    "author":"garymurphy",
+    "description":"A toy Vue.js3.0 tookkit for Web",
     "license": "ISC"
   }`
 

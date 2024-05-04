@@ -1,7 +1,10 @@
 {
-    "name": "sheep-ui",
+    "name": "@garymurphy/tian-ui",
+    "version":"0.0.0",
     "main": "sheep-ui.umd.js",
     "module": "sheep-ui.es.js",
     "keywords": ["vue3", "组件库", "tsx", "UI"],
+    "author":"garymurphy",
+    "description":"A toy Vue.js3.0 tookkit for Web",
     "license": "ISC"
   }

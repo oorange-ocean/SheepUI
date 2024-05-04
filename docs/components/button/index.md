@@ -4,8 +4,9 @@
 :::demo
 ```vue
 <template>
-<HelloWorld/>
-<Test/>
+<SButton type="primary" size="large" block></SButton>
+      <SButton type="primary" ></SButton>
+      <SButton type="primary" size="small" disabled>确定</SButton>
 </template>
 ```
 :::
