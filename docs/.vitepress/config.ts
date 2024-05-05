@@ -1,9 +1,8 @@
 import { defineConfig } from 'vitepress'
-import { demoblockPlugin, demoblockVitePlugin } from 'vitepress-theme-demoblock'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "tian-UI",
-  description: "A VitePress Site",
+  title: "Tian-UI",
+  description: "A Vue3 UI toolkit for Web",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -13,11 +12,11 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: '通用',
+        text: 'Examples',
         items: [
-          { text: 'Button', link: '/components/button/' },
-          //树组件
-          { text: 'Tree', link: '/components/tree/' }
+          { text: 'Markdown Examples', link: '/markdown-examples' },
+          { text: 'Runtime API Examples', link: '/api-examples' },
+          { text: 'Customization', link: '/customization' }
         ]
       }
     ],
@@ -25,13 +24,5 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ]
-  },
-  markdown: {
-    config: (md) => {
-      md.use(demoblockPlugin)
-    }
-  },
-  vite: {
-    plugins: [demoblockVitePlugin()]
   }
 })

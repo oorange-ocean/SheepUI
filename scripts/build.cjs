@@ -37,7 +37,7 @@ const createPackageJson = name => {
     "module": "${name ? 'index.umd.js' : 'tian-ui.es.js'}",
     "keywords": ["vue3", "组件库", "tsx", "UI"],
     "author":"garymurphy",
-    "description":"A toy Vue.js3.0 tookkit for Web",
+    "description":"A toy Vue.js3.0 toolkit for Web",
     "license": "ISC"
   }`
 

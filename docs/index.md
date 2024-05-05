@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "tian-UI"
-  text: "A VitePress Site"
+  name: "Tian-UI"
+  text: "A Vue3 UI toolkit for Web"
   tagline: My great project tagline
   actions:
     - theme: brand

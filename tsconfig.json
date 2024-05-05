@@ -1,15 +1,14 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "compilerOptions": {
+      "jsx": "preserve",
+      "esModuleInterop": true,
+      "moduleResolution": "Node",
+      "module": "ESNext",
+      "target": "ESNext"
     },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+    "ts-node": {
+      "esm": true
     }
-  ],
-
+  
 }
+
