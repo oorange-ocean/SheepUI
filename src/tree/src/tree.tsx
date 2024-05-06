@@ -9,8 +9,7 @@ export default defineComponent({
   props: treeProps,
   setup(props: TreeProps) {
     const {data}  = toRefs(props)
-    const { toggleNode,getChildren,getExpendedTree} = useTree(data)
-    const innerData =ref(generateInnerTree(data.value))
+    const { toggleNode,getExpendedTree} = useTree(data)
     return () => {
       return (
         <div class="s-tree">{
