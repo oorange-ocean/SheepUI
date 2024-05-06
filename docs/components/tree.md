@@ -1,6 +1,6 @@
 
 # 🌲 树
-<STree :data="data"></STree>
+<STree :data="data" checkable></STree>
 <script setup>
 import STree from '../../src/tree/src/tree'
 import '../../src/tree/styles/tree.scss'
