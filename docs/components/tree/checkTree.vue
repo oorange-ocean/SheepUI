@@ -1,9 +1,10 @@
-
-# 🌲 树
-<STree :data="data" checkable></STree>
+<template>
+<STree :data="data" checkable>
+</STree>
+</template>
 <script setup>
-import STree from '../../src/tree/src/tree'
-import '../../src/tree/styles/tree.scss'
+import STree from '../../../src/tree/src/tree'
+import '../../../src/tree/styles/tree.scss'
   import { ref } from 'vue'
   const data = ref([
     {

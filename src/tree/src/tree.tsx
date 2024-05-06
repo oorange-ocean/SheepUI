@@ -10,7 +10,7 @@ import {useTree}  from './useTree'
 export default defineComponent({
   name: 'STree',
   props: treeProps,
-  setup(props: TreeProps) {
+  setup(props: TreeProps,{slots}) {
     const {data,lineable,checkable}  = toRefs(props)
     const { toggleNode,expandedTree,getChildrenExpanded,toggleCheckNode} = useTree(data)
     return () => {
@@ -38,11 +38,14 @@ export default defineComponent({
                 )}
                 {/** 折叠图标 */}
                 {/* 判断当前节点是否是叶子结点*/}
-                {
-                  isLeaf ? 
-                  <span style={{display:'inline-block',width:'18px'}}></span>
-                  : (
-                    <svg
+                {isLeaf ? (
+                  <span
+                    style={{ display: 'inline-block', width: '18px' }}
+                  ></span>
+                ) : slots.icon ? (
+                  slots.icon({ nodeData: treeNode, toggleNode })
+                ) : (
+                  <svg
                     onClick={() => toggleNode(treeNode)}
                     style={{
                       width: '18px',
@@ -58,8 +61,7 @@ export default defineComponent({
                       d="M384 192v640l384-320.064z"
                     ></path>
                   </svg>
-                  )
-                }
+                )}
                 {/** 复选框 */}
                 {checkable.value && (
                   <span
@@ -84,7 +86,7 @@ export default defineComponent({
                   </span>
                 )}
                 {/** 标签 */}
-                {treeNode.label} 
+                {slots.content ? slots.content(treeNode) : treeNode.label}
               </div>
             )
           })
