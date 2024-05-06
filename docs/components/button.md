@@ -1,6 +1,6 @@
 <script setup>
-import SButton from '../src/button/src/button'
-import '../src/button/style/button.scss'
+import SButton from '../../src/button/src/button'
+import '../../src/button/style/button.scss'
 </script>
 
 # Docs
