@@ -1,5 +1,5 @@
 
-import { defineComponent, ref, toRefs } from 'vue'
+import { defineComponent, toRefs } from 'vue'
 import { type TreeProps, treeProps } from './tree-type'
 import useTree  from './useTree'
     // 节点宽度
@@ -12,7 +12,7 @@ export default defineComponent({
   props: treeProps,
   setup(props: TreeProps) {
     const {data}  = toRefs(props)
-    const { toggleNode,getExpendedTree,getChildren,getChildrenExpanded} = useTree(data)
+    const { toggleNode,getExpendedTree,getChildrenExpanded} = useTree(data)
     return () => {
       return (
         <div class="s-tree">{
