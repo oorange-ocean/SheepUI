@@ -1,5 +1,5 @@
 import type { ITreeNode, IInnerTreeNode } from '../src/tree-type'
-import { reactive, Ref, unref, computed, ref } from 'vue'
+import {  Ref, unref, computed, ref } from 'vue'
 import { generateInnerTree } from '../src/utils'
 
 export function useTree(node: Ref<ITreeNode[]> | ITreeNode[]) {
