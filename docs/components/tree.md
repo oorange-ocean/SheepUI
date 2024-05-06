@@ -3,6 +3,7 @@
 <STree :data="data"></STree>
 <script setup>
 import STree from '../../src/tree/src/tree'
+import '../../src/tree/styles/tree.scss'
   import { ref } from 'vue'
   const data = ref([
     {
@@ -55,3 +56,9 @@ import STree from '../../src/tree/src/tree'
     }
   ])
 </script>
+<style>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  
+</style>

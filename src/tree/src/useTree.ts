@@ -43,10 +43,27 @@ export default function useTree(node: Ref<ITreeNode[]> | ITreeNode[]) {
     // console.log('result:', result)
     return result
   })
+
+    // 计算参考线高度
+    const getChildrenExpanded = (node: IInnerTreeNode) => {
+      const result: IInnerTreeNode[] = []
+      // 找到node在列表中的索引
+      const startIndex = getExpendedTree.value.findIndex(item => item.id === node.id)
+      for (
+        let i = startIndex + 1;
+        i < getExpendedTree.value.length && node.level < getExpendedTree.value[i].level;
+        i++
+      ) {
+        result.push(getExpendedTree.value[i])
+      }
+      // 找到它后面所有的子节点(level比当前节点大)
+      return result
+    }
   return {
     innerData,
     toggleNode,
     getChildren,
-    getExpendedTree
+    getExpendedTree,
+    getChildrenExpanded
   }
 }
