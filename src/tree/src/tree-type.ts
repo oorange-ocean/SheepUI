@@ -9,7 +9,7 @@ export interface ITreeNode {
   checked?: boolean // 勾选
   expanded?: boolean // 展开
   inChecked?: boolean // 待选中
-
+  showed?: boolean // 是否显示
   disableSelect?: boolean
   disableCheck?: boolean
   disableToggle?: boolean
@@ -35,7 +35,13 @@ export const treeProps = {
   lineable: {
     type: Boolean,
     default: false
+  },
+  // 是否显示操作按钮
+  operable: {
+    type: Boolean,
+    default: false
   }
+
 } as const
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>

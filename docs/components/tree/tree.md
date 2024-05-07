@@ -7,6 +7,7 @@ import normalTree from './normalTree.vue'
 import linedTree from './linedTree.vue'
 import checkTree from './checkTree.vue'
 import customTree from './customTree.vue'
+import appendTree from './appendTree.vue'
 </script>
 # 🌲 树
 <normalTree/>
@@ -189,3 +190,5 @@ import '../../../src/tree/styles/tree.scss'
 :::
 
 
+# 🌲 节点操作功能
+<appendTree/>
