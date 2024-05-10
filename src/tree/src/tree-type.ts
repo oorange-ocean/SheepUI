@@ -19,6 +19,8 @@ export interface IInnerTreeNode extends ITreeNode {
   parentId?: string // 父节点ID
   level: number // 父节点层级
   isLeaf?: boolean // 是否叶子节点
+  loading?: boolean // 节点是否显示加载中
+  childNodeCount?: number // 该节点子节点的数量
 }
 
 export const treeProps = {
@@ -40,7 +42,12 @@ export const treeProps = {
   operable: {
     type: Boolean,
     default: false
-  }
+  },
+  //拖拽
+  dragdrop: {
+    type: [Boolean, Object] as PropType<IDragdrop>,
+    default: false
+  },
 
 } as const
 

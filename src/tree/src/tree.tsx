@@ -1,7 +1,7 @@
 
-import { defineComponent, toRefs } from 'vue'
+import { SetupContext, defineComponent, toRefs } from 'vue'
 import { type TreeProps, treeProps, IInnerTreeNode } from './tree-type'
-import {useTree}  from './useTree'
+import useTree  from './composables/use-tree'
     // 节点宽度
     const NODE_INDENT = 24
     // 节点高度
@@ -9,13 +9,16 @@ import {useTree}  from './useTree'
 export default defineComponent({
   name: 'STree',
   props: treeProps,
-  setup(props: TreeProps,{slots}) {
+  emits:['lazy-load'],
+  setup(props: TreeProps,context:SetupContext) {
     const {data,lineable,checkable,operable}  = toRefs(props)
-    const { toggleNode,expandedTree,getChildrenExpanded,toggleCheckNode,append,remove} = useTree(data)
+    const {slots} = context
+    const  treeData = useTree(data.value,context) 
+    //toggleNode,expandedTree,getChildrenExpanded,toggleCheckNode,append,remove
     return () => {
       return (
         <div class="s-tree">{
-          expandedTree.value.map((treeNode) => {
+          treeData.expendedTree.value.map((treeNode) => {
             const { level, isLeaf, expanded } = treeNode
             const toggleOperate = () => {
               if (treeNode.showed) {
@@ -39,13 +42,16 @@ export default defineComponent({
                     class="s-tree-node__vine absolute w-px bg-gray-200"
                     style={{
                       height: `${
-                        NODE_HEIGHT * getChildrenExpanded(treeNode).length
+                        NODE_HEIGHT * treeData.getChildrenExpanded(treeNode).length
                       }px`,
                       left: `${NODE_INDENT * (level - 1) + 11}px`,
                       top: `${NODE_HEIGHT}px`
                     }}
                   ></span>
                 )}
+                <div class="s-tree_node--content" draggable={
+                  !!props.dragdrop
+                }>
                 {/** 折叠图标 */}
                 {/* 判断当前节点是否是叶子结点*/}
                 {isLeaf ? (
@@ -53,10 +59,10 @@ export default defineComponent({
                     style={{ display: 'inline-block', width: '18px' }}
                   ></span>
                 ) : slots.icon ? (
-                  slots.icon({ nodeData: treeNode, toggleNode })
+                  slots.icon({ nodeData: treeNode, toggleNode: treeData.toggleNode })
                 ) : (
                   <svg
-                    onClick={() => toggleNode(treeNode)}
+                    onClick={() => treeData.toggleNode(treeNode)}
                     style={{
                       width: '18px',
                       height: '18px',
@@ -91,7 +97,7 @@ export default defineComponent({
                       type="checkbox"
                       style={{ marginRight: '8px' }}
                       v-model={treeNode.checked}
-                      onClick={() => toggleCheckNode(treeNode)}
+                      onClick={() => treeData.toggleCheckNode(treeNode)}
                     ></input>
                   </span>
                 )}
@@ -103,7 +109,7 @@ export default defineComponent({
                     <svg
                       onClick={
                         () => {
-                        append(treeNode, {
+                        treeData.append(treeNode, {
                           label: '新节点'
                         } as IInnerTreeNode)
                       }
@@ -117,7 +123,7 @@ export default defineComponent({
                     </svg>
                     <svg
                       onClick={() => {
-                        remove(treeNode)
+                        treeData.remove(treeNode)
                       }}
                       viewBox="0 0 1024 1024"
                       width="14"
@@ -128,6 +134,22 @@ export default defineComponent({
                     </svg>
                   </span>
                 )}
+                {/*loading*/}
+                {treeNode.loading && (
+                  <svg
+                    viewBox="0 0 1024 1024"
+                    width="14"
+                    height="14"
+                    class="ml-1"
+                  >
+                    <path
+                      d="M512 64c-247.424 0-448 200.576-448 448s200.576 448 448 448 448-200.576 448-448-200.576-448-448-448z m0 832c-194.464 0-352-157.536-352-352s157.536-352 352-352 352 157.536 352 352-157.536 352-352 352z m-64-192v-256h128v256h-128z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                )}
+                {/*子节点*/}
+                </div>
               </div>
             )
           })

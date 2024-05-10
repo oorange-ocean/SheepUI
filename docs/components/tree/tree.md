@@ -1,5 +1,5 @@
 ---
-# 🌲 树
+## 树
 ---
 
 <script setup>
@@ -8,8 +8,12 @@ import linedTree from './linedTree.vue'
 import checkTree from './checkTree.vue'
 import customTree from './customTree.vue'
 import appendTree from './appendTree.vue'
+import lazyloadTree from './lazyloadTree.vue'
 </script>
+
 # 🌲 树
+## 基本功能
+Tree 组件基本用法，传入data属性即可。 
 <normalTree/>
 ::: details
 ```vue
@@ -80,18 +84,18 @@ import '../../../src/tree/styles/tree.scss'
 </style>
 ```
 :::
-<br/>
 
-# 🌲 对齐线功能
+## 连接线功能
+展开节点之后设置连接线便于分辨同级节点。通过lineable属性控制特性开关，默认 false。 
 <linedTree/>
-<br/>
 
-# 🌲 勾选功能
+## 勾选功能
+通过复选框可以多选节点，这样可以批量操作节点。 
 <checkTree/>
 
-<br/>
 
-# 🌲 自定义图标以及 label
+## 自定义图标以及 label
+通过 content 插槽可以自定义节点内容。
 <customTree />
 ::: details
 ```vue
@@ -190,5 +194,10 @@ import '../../../src/tree/styles/tree.scss'
 :::
 
 
-# 🌲 节点操作功能
+## 节点操作功能
+通过设置operable打开节点操作按钮。
 <appendTree/>
+
+## 节点懒加载功能
+通过设置该节点 isLeaf 参数为 false, 组件回调 lazyLoad 方法实现节点懒加载。
+<lazyloadTree/>
