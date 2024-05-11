@@ -32,7 +32,7 @@ v-else @click="(event) => {
 </template>
 <script setup>
 import STree from '../../../src/tree/src/tree'
-import '../../../src/tree/styles/tree.scss'
+import '../../../src/tree/style/tree.scss'
   import { ref } from 'vue'
   const data = ref([
     {

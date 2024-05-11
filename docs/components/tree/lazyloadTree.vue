@@ -4,7 +4,7 @@
 <script setup>
 import { ref } from 'vue';
 import STree from '../../../src/tree/src/tree'
-  import '../../../src/tree/styles/tree.scss'
+  import '../../../src/tree/style/tree.scss'
 
     const data = ref([
       {

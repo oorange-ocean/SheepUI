@@ -1,7 +1,10 @@
 <template>
-  <STree :data="data" lineable>
-  </STree>
-  </template>
+  <h6><p>默认行为</p></h6>
+  <STree :data="data" dragdrop></STree>
+
+  <h6><p>排序</p></h6>
+  <STree :data="data" :dragdrop="{ dropPrev: true, dropNext: true, dropInner: true }"></STree>
+</template>
   <script setup>
   import STree from '../../../src/tree/src/tree'
   import '../../../src/tree/style/tree.scss'

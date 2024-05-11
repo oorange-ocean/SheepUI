@@ -9,6 +9,8 @@ import checkTree from './checkTree.vue'
 import customTree from './customTree.vue'
 import appendTree from './appendTree.vue'
 import lazyloadTree from './lazyloadTree.vue'
+import dragTree from './dragTree.vue'
+import virtualListTree from './virtualListTree.vue'
 </script>
 
 # 🌲 树
@@ -23,7 +25,7 @@ Tree 组件基本用法，传入data属性即可。
 </template>
 <script setup>
 import STree from '../../../src/tree/src/tree'
-import '../../../src/tree/styles/tree.scss'
+import '../../../src/tree/style/tree.scss'
   import { ref } from 'vue'
   const data = ref([
     {
@@ -131,7 +133,7 @@ import '../../../src/tree/styles/tree.scss'
 </template>
 <script setup>
 import STree from '../../../src/tree/src/tree'
-import '../../../src/tree/styles/tree.scss'
+import '../../../src/tree/style/tree.scss'
   import { ref } from 'vue'
   const data = ref([
     {
@@ -201,3 +203,11 @@ import '../../../src/tree/styles/tree.scss'
 ## 节点懒加载功能
 通过设置该节点 isLeaf 参数为 false, 组件回调 lazyLoad 方法实现节点懒加载。
 <lazyloadTree/>
+
+## 可拖拽树
+通过设置 draggable 属性为 true，可以实现树节点的拖拽功能。
+<dragTree/>
+
+## 虚拟滚动
+通过height开启虚拟滚动，通过itemHeight设置项目高度
+<virtualListTree/>
