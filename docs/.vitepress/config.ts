@@ -17,7 +17,8 @@ export default defineConfig({
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' },
           { text: '按钮', link: '/components/button' },
-          { text: '树', link: '/components/tree/tree.md' }
+          { text: '树', link: '/components/tree/tree.md' },
+          { text: '分页', link: '/components/pagination/pagination.md' }
         ]
       }
     ],

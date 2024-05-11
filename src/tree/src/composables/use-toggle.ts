@@ -13,7 +13,6 @@ export function useToggle(
     const cur = innerData.value.find(item => item.id === node.id)
     if (cur) {
       cur.expanded = !cur.expanded
-
       if (cur.expanded) {
         // 节点懒加载
         lazyLoadNodes(cur)
