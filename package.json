@@ -22,6 +22,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "async-validator": "^4.2.5",
     "fs-extra": "^11.2.0",
     "vitepress-demoblock": "^1.0.4",
     "vue": "^3.4.21"
