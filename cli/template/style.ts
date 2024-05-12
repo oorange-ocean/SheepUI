@@ -1,7 +1,7 @@
 export function genStyleTemplate(name) {
   return `\
 .s-${name} {
-  /* your component style */
+/* your component style */
 
 }
 `

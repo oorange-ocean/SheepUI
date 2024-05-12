@@ -1,39 +1,92 @@
-import { Ref } from 'vue'
+import { Ref, SetupContext } from 'vue'
 import { IInnerTreeNode } from '../tree-type'
 import { IUseCheck, IUseCore } from './use-tree-type'
 
 export function useCheck(
   innerData: Ref<IInnerTreeNode[]>,
-  { getChildren }: IUseCore
+  { getChildren, getParent }: IUseCore,
+  { emit }: SetupContext
 ): IUseCheck {
-  const toggleCheckNode = (treeNode: IInnerTreeNode) => {
-    // 父节点可能一开始没有设置checked
-    // 这里手动设置一下
-    treeNode.checked = !treeNode.checked
-
-    // 获取所有子节点，设置它们checked跟父节点一致
-    getChildren(treeNode).forEach(child => {
-      child.checked = treeNode.checked
+  const toggleCheckNode = (currentNode: IInnerTreeNode) => {
+    //避免初始化的时候node中没有checked设置
+    currentNode.checked = !currentNode.checked
+    // 父-子联动
+    // 获取子节点，并同步他们的选中状态和父节点一致
+    getChildren(currentNode).forEach(child => {
+      child.checked = currentNode.checked
+      child.inChecked = getChildren(currentNode, true).every(
+        sibling => sibling.inChecked
+      )
     })
-
-    // 子-父联动
-    // 获取父节点
-    const parentNode = innerData.value.find(
-      item => item.id === treeNode.parentId
+    currentNode.inChecked = false // 重置待选中状态
+    setChecked(currentNode)
+    /**
+     * @param {IInnerTreeNode} currentNode 当前节点
+     * @param {Array<{id:string}>} selectedRowKeys 所选节点id
+     * @param {Array<IInnerTreeNode>} selectedRows 选定的行
+     * @param {Array<{id:string}>} halfSelectedRowKeys 半选节点id
+     * @param {Array<IInnerTreeNode>} halfSelectedRows 半选的行
+     */
+    const selectedRowKeys = innerData.value
+      .map(item => {
+        if (item.checked) {
+          return item.id
+        }
+      })
+      .filter(Boolean)
+    const selectedRows = innerData.value
+      .map(item => {
+        if (item.checked) {
+          return item
+        }
+      })
+      .filter(Boolean)
+    const halfSelectedRowKeys = innerData.value
+      .map(item => {
+        if (item.inChecked) {
+          return item.id
+        }
+      })
+      .filter(Boolean)
+    const halfSelectedRows = innerData.value
+      .map(item => {
+        if (item.inChecked) {
+          return item
+        }
+      })
+      .filter(Boolean)
+    emit(
+      'check',
+      currentNode,
+      selectedRowKeys,
+      selectedRows,
+      halfSelectedRowKeys,
+      halfSelectedRows
     )
+  }
+  // 子-父联动 并且设置父节点选中内容
+  const setChecked = (node: IInnerTreeNode) => {
+    // 获取父节点
+    const parentNode = getParent(node)
     // 如果没有父节点，则没必要处理子到父的联动
     if (!parentNode) return
-    // 获取兄弟节点：只是一个特殊的getChildren，仅获取父节点直接子节点，需要改造getChildren
-    const siblingNodes = getChildren(parentNode, false)
-    const checkedSiblingNodes = siblingNodes.filter(item => item.checked)
-
-    if (checkedSiblingNodes.length === siblingNodes.length) {
-      // 如果所有兄弟节点都被勾选，则设置父节点的checked属性为true
-      parentNode.checked = true
-    } else if (checkedSiblingNodes.length === 0) {
-      // 否则设置父节点的checked属性为false
-      parentNode.checked = false
+    // 获取兄弟节点：相当于获取 parentNode 的直接子节点
+    const siblingNodes = getChildren(parentNode, true)
+    // 兄弟节点是否全部选中状态
+    const siblingCheckStatus = siblingNodes.every(sibling => sibling.checked)
+    // 所有兄弟节点均选中，父节点应该被选中
+    parentNode.checked = siblingCheckStatus
+    const siblingIncheckedStatus = siblingNodes.some(child => child.checked)
+    if (siblingCheckStatus) {
+      // 全部选中
+      parentNode.inChecked = false
+    } else if (siblingIncheckedStatus) {
+      // 兄弟节点中存在选中的节点
+      parentNode.inChecked = true
+    } else {
+      parentNode.inChecked = false
     }
+    if (parentNode.parentId) setChecked(parentNode)
   }
   return {
     toggleCheckNode

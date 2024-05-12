@@ -1,18 +1,16 @@
-//变量
-// button/src/button.scss
-@use './button-config';
-@import './button-base';
+@use './button-config.scss';
+@import './button-base.scss';
 
 .s-btn {
-  // 导入button基础样式
   @include button-base;
-
-  // 导入type相关的样式
-  @include button-variant(button-config.$type);
-  
-  // 导入hover等伪类样式
-  @include button-variant(button-config.$pseudo, true);
-
-  // 导入size相关样式
-  @include button-variant(button-config.$size);
+  @include button-variant(button-config.$plain); // 导入朴素按钮相关样式
+  @include button-variant(
+    button-config.$plainPseudo,
+    true
+  ); // 导入朴素按钮相关样式
+  @include button-variant(button-config.$circle); // 导入圆角按钮相关样式
+  @include button-variant(button-config.$round); // 导入圆角按钮相关样式
+  @include button-variant(button-config.$size); // 导入size相关样式
+  @include button-variant(button-config.$type); // 导入type 相关的样式
+  @include button-variant(button-config.$pseudo, true); //  导入 hover 等伪类
 }

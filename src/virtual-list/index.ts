@@ -7,6 +7,6 @@ export { VirtualList }
 // 导出插件
 export default {
   install(app: App) {
-    app.component('VirtualList', VirtualList)
+    app.component(VirtualList.name, VirtualList)
   }
 }

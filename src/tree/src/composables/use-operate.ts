@@ -1,13 +1,14 @@
-import { Ref, ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { randomId } from '../../../shared/utils'
 import { IInnerTreeNode } from '../tree-type'
-import {  IUseCore, IUseOperate } from './use-tree-type'
+import { IUseCore, IUseOperate } from './use-tree-type'
 
 export function useOperate(
   innerData: Ref<IInnerTreeNode[]>,
   { getChildren, getIndex }: IUseCore
 ): IUseOperate {
   const append = (parent: IInnerTreeNode, node: IInnerTreeNode) => {
+    // 增加节点的逻辑
     // console.log('node-operate append', parent, node)
     // 1.获取parent最后一个子节点
     const children = getChildren(parent, false)
@@ -17,6 +18,7 @@ export function useOperate(
     // 默认在parent后面
     let insertedIndex = getIndex(parent) + 1
 
+    // 如果存在lastChild则在其后面
     if (lastChild) {
       insertedIndex = getIndex(lastChild) + 1
     }
@@ -42,13 +44,13 @@ export function useOperate(
     // 插入新增节点
     innerData.value.splice(insertedIndex, 0, currentNode.value)
   }
-
   const remove = (node: IInnerTreeNode) => {
+    // 删除节点的逻辑
     // console.log('node-operate remove', node)
-    const childrentIds = getChildren(node).map(nodeItem => nodeItem.id)
+    const childrenIds = getChildren(node).map(nodeItem => nodeItem.id)
     // 过滤掉node和其子节点之外的节点
     innerData.value = innerData.value.filter(
-      item => item.id !== node.id && !childrentIds.includes(item.id)
+      item => item.id !== node.id && !childrenIds.includes(item.id)
     )
   }
   return {

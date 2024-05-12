@@ -3,8 +3,8 @@ import { SetupContext } from 'vue'
 export default (props: { expanded: boolean }, { emit }: SetupContext) => (
   <svg
     style={{
-      width: '25px',
-      height: '16px',
+      width: '18px',
+      height: '18px',
       display: 'inline-block',
       transform: props.expanded ? 'rotate(90deg)' : ''
     }}

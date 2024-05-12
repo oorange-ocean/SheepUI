@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue'
+import { ExtractPropTypes } from 'vue'
 
 export const paginationProps = {
   total: {
@@ -11,12 +11,16 @@ export const paginationProps = {
   },
   pagerCount: {
     type: Number,
-    default: 7
+    // default: 7
+    default: 5
   },
   modelValue: {
     type: Number,
     default: 1
+  },
+  hideOnSinglePage: {
+    type: Boolean,
+    default: true
   }
 } as const
-
 export type PaginationProps = ExtractPropTypes<typeof paginationProps>

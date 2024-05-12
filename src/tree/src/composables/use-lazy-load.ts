@@ -1,13 +1,9 @@
-import { Ref, ref, SetupContext } from 'vue'
+import { ref, Ref, SetupContext } from 'vue'
 import { IInnerTreeNode } from '../tree-type'
 import { generateInnerTree } from '../utils'
-import {
-  IUseCore,
-  IUseLazyLoad,
-  LazyNodeResult
-} from './use-tree-type'
+import { IUseCore, IUseLazyLoad, LazyNodeResult } from './use-tree-type'
 
-export function useLazyLoad( 
+export function useLazyLoad(
   innerData: Ref<IInnerTreeNode[]>,
   { getNode, getIndex, getChildren }: IUseCore,
   { emit }: SetupContext
@@ -18,12 +14,11 @@ export function useLazyLoad(
     // 判断是否需要懒加载节点
     if (innerNode && innerNode.isLeaf === false && !innerNode.childNodeCount) {
       innerNode.loading = true
-      // 派发事件，让外面加载数据
+      // 派发事件,让外面加载数据
       emit('lazy-load', node, dealChildNodes)
     }
   }
-
-  // 用户获取子节点数据之后，调用该函数
+  // 用户获取子节点数据之后,调用该函数
   const dealChildNodes = (result: LazyNodeResult) => {
     // 获取父节点
     const node = getNode(result.node)
@@ -40,12 +35,11 @@ export function useLazyLoad(
       setParent(node, childNodes)
       insertChildren(node, childNodes)
 
-      // 更新父节点孩子数量
+      //更新父节点孩子数量
       const children = getChildren(node)
       node.childNodeCount = children.length
     }
   }
-
   // 设置子节点的parentId
   const setParent = (
     node: IInnerTreeNode,
@@ -68,7 +62,6 @@ export function useLazyLoad(
       innerData.value.splice(parentIndex + 1, 0, ...nodes.value)
     }
   }
-
   return {
     lazyLoadNodes
   }

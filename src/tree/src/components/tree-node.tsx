@@ -1,19 +1,27 @@
 import { defineComponent, inject, ref, toRefs } from 'vue'
+import {
+  BaseSelectAll, // 全选
+  BaseSemiSelection, // 半选
+  BaseSelectionBox // 选择框
+} from '../../../base-selection-box'
 import { TreeUtils } from '../composables/use-tree-type'
 import { IInnerTreeNode } from '../tree-type'
 import { TreeNodeProps, treeNodeProps } from './tree-node-type'
-
-// 节点高度
-const NODE_HEIGHT = 32
-
-// 节点缩进大小
-const NODE_INDENT = 24
+const NODE_HEIGHT = 34 // 节点高度
+const NODE_INDENT = 24 // 节点缩进大小
 
 export default defineComponent({
   name: 'STreeNode',
   props: treeNodeProps,
   setup(props: TreeNodeProps, { slots }) {
-    const { lineable, checkable, operable, dragdrop, treeNode } = toRefs(props)
+    const {
+      lineable,
+      checkable,
+      treeNode,
+      operable,
+      draggable,
+      props: defaultProps
+    } = toRefs(props)
     const {
       toggleCheckNode,
       getChildrenExpanded,
@@ -25,8 +33,9 @@ export default defineComponent({
       onDragstart,
       onDrop
     } = inject('TREE_UTILS') as TreeUtils
+    console.log('defaultProps', defaultProps)
 
-    // 创建一个开关变量
+    // 创建一个开关的变量
     const isShow = ref(false)
     const toggleOperate = () => {
       if (isShow.value) {
@@ -35,11 +44,10 @@ export default defineComponent({
         isShow.value = true
       }
     }
-
     // 构造drag属性对象
-    let dragdropProps = {}
-    if (dragdrop.value) {
-      dragdropProps = {
+    let draggableProps = {}
+    if (draggable.value) {
+      draggableProps = {
         draggable: true,
         onDragend: (event: DragEvent) => onDragend(event),
         onDragleave: (event: DragEvent) => onDragleave(event),
@@ -49,13 +57,32 @@ export default defineComponent({
       }
     }
 
+    const CheckBoxStatus = () => (
+      <>
+        {treeNode.value.inChecked ? (
+          <BaseSemiSelection
+            onClick={() => toggleCheckNode(treeNode.value)}
+            disabled={treeNode.value.disabled}
+          />
+        ) : treeNode.value.checked ? (
+          <BaseSelectAll
+            onClick={() => toggleCheckNode(treeNode.value)}
+            disabled={treeNode.value.disabled}
+          />
+        ) : (
+          <BaseSelectionBox
+            onClick={() => toggleCheckNode(treeNode.value)}
+            disabled={treeNode.value.disabled}
+          />
+        )}
+      </>
+    )
+
     return () => (
       <div
-        class="s-tree__node relative leading-8 hover:bg-slate-300"
-        style={{
-          paddingLeft: `${NODE_INDENT * (treeNode.value.level - 1)}px`
-        }}
-        // 控制操作按钮显示
+        class="s-tree__node hover:bg-slate-300 relative leading-8"
+        style={{ paddingLeft: `${NODE_INDENT * (treeNode.value.level - 1)}px` }}
+        // 控制操作按钮的显示
         onMouseenter={toggleOperate}
         onMouseleave={toggleOperate}
       >
@@ -67,40 +94,24 @@ export default defineComponent({
               height: `${
                 NODE_HEIGHT * getChildrenExpanded(treeNode.value).length
               }px`,
-              left: `${NODE_INDENT * (treeNode.value.level - 1) + 12}px`,
+              left: `${NODE_INDENT * (treeNode.value.level - 1) + 9}px`,
               top: `${NODE_HEIGHT}px`
             }}
-          ></span>
+          />
         )}
-
-        <div class="s-tree__node--content" {...dragdropProps}>
-          {/* 如果是叶子节点则放一个空白占位元素，否则放一个三角形反馈图标 */}
+        <div class="s-tree__node--content" {...draggableProps}>
+          {/* 折叠图标 */}
+          {/* 判断当前节点是否是叶子节点则放一个空白站位元素，否则发一个三角形反馈图标 */}
           {treeNode.value.isLeaf ? (
-            <span
-              style={{
-                display: 'inline-block',
-                width: '25px'
-              }}
-            />
+            <span style={{ display: 'inline-block', width: '18px' }} />
           ) : (
-            slots.icon!()
+            slots.icon?.()
           )}
           {/* 复选框 */}
-          {checkable.value && (
-            <input
-              type="checkbox"
-              v-model={treeNode.value.checked}
-              class="relative top-[2px] mr-1"
-              onClick={() => {
-                toggleCheckNode(treeNode.value)
-              }}
-            />
-          )}
-
-          {/* 节点文本 */}
-          {slots.content!()}
-
-          {/* 节点增删操作 */}
+          {checkable.value && CheckBoxStatus()}
+          {/* 节点文本本 */}
+          {slots.content?.()}
+          {/* 增删改操作 */}
           {operable.value && isShow.value && (
             <span class="inline-flex ml-1">
               <svg
@@ -129,9 +140,8 @@ export default defineComponent({
               </svg>
             </span>
           )}
-
-          {/* loading状态显示 */}
-          {treeNode.value.loading && slots.loading!()}
+          {/* loading状态显示  */}
+          {treeNode.value.loading && slots.loading?.()}
         </div>
       </div>
     )

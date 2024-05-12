@@ -1,27 +1,45 @@
 import { defineComponent, provide, SetupContext, toRefs } from 'vue'
-import useTree from './composables/use-tree'
+import { useTree } from './composables/use-tree'
 import { IInnerTreeNode, TreeProps, treeProps } from './tree-type'
 import STreeNode from './components/tree-node'
 import STreeNodeToggle from './components/tree-node-toggle'
+import '../../index.scss'
 import '../style/tree.scss'
 import { VirtualList } from '../../virtual-list'
-
 export default defineComponent({
   name: 'STree',
   props: treeProps,
-  emits: ['lazy-load'],
+  emits: ['lazy-load', 'check'],
   setup(props: TreeProps, context: SetupContext) {
     // 获取data
-    const { data, height, itemHeight } = toRefs(props)
+    const {
+      data,
+      height,
+      itemHeight,
+      accordion,
+      props: defaultProps
+    } = toRefs(props)
     const { slots } = context
-    const treeData = useTree(data.value, props, context)
+    const treeData = useTree(data, props, context)
     provide('TREE_UTILS', treeData)
     return () => {
       const TreeNode = (treeNode: IInnerTreeNode) => (
-        <STreeNode {...props} treeNode={treeNode}>
+        <STreeNode
+          {...props}
+          treeNode={treeNode}
+          onClick={
+            accordion.value
+              ? (e: Event) => treeData.toggleNode(e, treeNode, accordion.value)
+              : ''
+          }
+        >
           {{
             content: () =>
-              slots.content ? slots.content(treeNode) : treeNode.label,
+              slots.content
+                ? slots.content(treeNode)
+                : defaultProps.value.label == 'label'
+                ? treeNode.label
+                : treeNode[defaultProps.value.label],
             icon: () =>
               slots.icon ? (
                 slots.icon({
@@ -31,8 +49,10 @@ export default defineComponent({
               ) : (
                 <STreeNodeToggle
                   expanded={!!treeNode.expanded}
-                  onClick={() => treeData.toggleNode(treeNode)}
-                ></STreeNodeToggle>
+                  onClick={(e: Event) =>
+                    treeData.toggleNode(e, treeNode, accordion.value)
+                  }
+                />
               ),
             loading: () =>
               slots.loading ? (
@@ -46,10 +66,10 @@ export default defineComponent({
       return (
         <div class="s-tree">
           {height?.value ? (
-            // 如果设置了height，则添加虚拟列表
+            //虚拟列表
             <div style={{ height: `${height.value}px` }}>
               <VirtualList
-                data={treeData.expendedTree.value}
+                data={treeData.expandedTree.value}
                 itemHeight={itemHeight.value}
               >
                 {{
@@ -59,8 +79,8 @@ export default defineComponent({
               </VirtualList>
             </div>
           ) : (
-            // 没有height，则正常输出节点
-            treeData.expendedTree.value.map((treeNode: IInnerTreeNode) =>
+            // 循环节点
+            treeData.expandedTree.value.map((treeNode: IInnerTreeNode) =>
               TreeNode(treeNode)
             )
           )}
