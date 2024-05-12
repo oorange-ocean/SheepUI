@@ -38,21 +38,21 @@ const rollupOptions = {
 const createPackageJson = name => {
   // 预设
   const fileStr = `{
-    "name": "${name ? name : 'min-sheep-ui'}",
+    "name": "${name ? name : '@garymurphy/tian-ui'}",
     "version": "${version}",
-    "main": "${name ? 'index.umd.js' : 'min-sheep-ui.umd.js'}",
-    "module": "${name ? 'index.mjs' : 'min-sheep-ui.mjs'}",
-    "author": "xp2000926",
+    "main": "${name ? 'index.umd.js' : 'Tian-ui.umd.js'}",
+    "module": "${name ? 'index.mjs' : 'Tian-ui.mjs'}",
+    "author": "Tian",
     "github": "",
-    "description": "羊村第一个组件库min-Sheep-UI，以后村里羊圈能不能建好就看它了！",
+    "description": "Tian-UI，a Vue 3.0 UI Library",
     "repository": {
       "type": "git",
-      "url": "https://github.com/xp2000926/min-sheep-ui.git"
+      "url": "https://github.com/oorange-ocean/Tian-UI.git"
     },
     "keywords": ["vue3", "组件库", "tsx", "UI"],
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/xp2000926/min-sheep-ui/issues"
+      "url": "https://github.com/oorange-ocean/Tian-UI/issues"
     }
   }`
 
@@ -82,7 +82,7 @@ const buildAll = async () => {
         lib: {
           entry: entryFile,
           name: 'MinSheepUI',
-          fileName: 'min-sheep-ui',
+          fileName: 'Tian-ui',
           formats: ['es', 'umd']
         },
         outDir: outputDir
@@ -128,7 +128,7 @@ const buildLib = async () => {
     let { version: res } = await inquirer.prompt({
       name: 'version',
       type: 'input',
-      message: '（必填）请输入版本号 ，将用min-sheep-ui发布于使用：',
+      message: '（必填）请输入版本号 ，将用Tian-ui发布于使用：',
       validate: value => {
         if (value.trim() === '') {
           return '版本号不能为空'

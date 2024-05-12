@@ -35,27 +35,27 @@ const Q = ae({
       labelAlign: n.labelAlign
     }));
     U("LABEL_DATA", i);
-    const f = /* @__PURE__ */ new Set(), a = (l) => f.add(l), s = (l) => f.delete(l);
+    const f = /* @__PURE__ */ new Set(), a = (p) => f.add(p), s = (p) => f.delete(p);
     U(fe, {
       model: n.model,
       rules: n.rules,
       addItem: a,
       removeItem: s
     });
-    const o = (l) => {
-      l.preventDefault(), r("submit");
+    const o = (p) => {
+      p.preventDefault(), r("submit");
     };
     return t({
-      validate: (l) => {
+      validate: (p) => {
         const m = [];
-        f.forEach((g) => m.push(g.validate())), Promise.all(m).then(() => l(!0)).catch(() => l(!1));
+        f.forEach((y) => m.push(y.validate())), Promise.all(m).then(() => p(!0)).catch(() => p(!1));
       }
     }), () => {
-      var l;
+      var p;
       return N("form", {
         class: "s-form",
         onSubmit: o
-      }, [(l = e.default) == null ? void 0 : l.call(e)]);
+      }, [(p = e.default) == null ? void 0 : p.call(e)]);
     };
   }
 }), me = {
@@ -68,6 +68,10 @@ const Q = ae({
   error: {
     type: String,
     default: ""
+  },
+  hidden: {
+    type: Boolean,
+    default: !1
   }
 };
 function R() {
@@ -109,8 +113,8 @@ function L(n, e, r) {
   return ge() ? L = Reflect.construct.bind() : L = function(i, f, a) {
     var s = [null];
     s.push.apply(s, f);
-    var o = Function.bind.apply(i, s), b = new o();
-    return a && I(b, a.prototype), b;
+    var o = Function.bind.apply(i, s), h = new o();
+    return a && I(h, a.prototype), h;
   }, L.apply(null, arguments);
 }
 function ve(n) {
@@ -157,7 +161,7 @@ function Z(n) {
     e[t] = e[t] || [], e[t].push(r);
   }), e;
 }
-function x(n) {
+function F(n) {
   for (var e = arguments.length, r = new Array(e > 1 ? e - 1 : 0), t = 1; t < e; t++)
     r[t - 1] = arguments[t];
   var i = 0, f = r.length;
@@ -192,7 +196,7 @@ function x(n) {
 function be(n) {
   return n === "string" || n === "url" || n === "hex" || n === "email" || n === "date" || n === "pattern";
 }
-function h(n, e) {
+function b(n, e) {
   return !!(n == null || e === "array" && Array.isArray(n) && !n.length || be(e) && typeof n == "string" && !n);
 }
 function we(n, e, r) {
@@ -232,28 +236,28 @@ var ee = /* @__PURE__ */ function(n) {
 }(/* @__PURE__ */ W(Error));
 function Fe(n, e, r, t, i) {
   if (e.first) {
-    var f = new Promise(function(g, O) {
-      var q = function(u) {
-        return t(u), u.length ? O(new ee(u, Z(u))) : g(i);
+    var f = new Promise(function(y, x) {
+      var O = function(u) {
+        return t(u), u.length ? x(new ee(u, Z(u))) : y(i);
       }, d = qe(n);
-      k(d, r, q);
+      k(d, r, O);
     });
-    return f.catch(function(g) {
-      return g;
+    return f.catch(function(y) {
+      return y;
     }), f;
   }
-  var a = e.firstFields === !0 ? Object.keys(n) : e.firstFields || [], s = Object.keys(n), o = s.length, b = 0, l = [], m = new Promise(function(g, O) {
-    var q = function(v) {
-      if (l.push.apply(l, v), b++, b === o)
-        return t(l), l.length ? O(new ee(l, Z(l))) : g(i);
+  var a = e.firstFields === !0 ? Object.keys(n) : e.firstFields || [], s = Object.keys(n), o = s.length, h = 0, p = [], m = new Promise(function(y, x) {
+    var O = function(v) {
+      if (p.push.apply(p, v), h++, h === o)
+        return t(p), p.length ? x(new ee(p, Z(p))) : y(i);
     };
-    s.length || (t(l), g(i)), s.forEach(function(d) {
+    s.length || (t(p), y(i)), s.forEach(function(d) {
       var v = n[d];
-      a.indexOf(d) !== -1 ? k(v, r, q) : we(v, r, q);
+      a.indexOf(d) !== -1 ? k(v, r, O) : we(v, r, O);
     });
   });
-  return m.catch(function(g) {
-    return g;
+  return m.catch(function(y) {
+    return y;
   }), m;
 }
 function xe(n) {
@@ -288,14 +292,14 @@ function te(n, e) {
   return n;
 }
 var oe = function(e, r, t, i, f, a) {
-  e.required && (!t.hasOwnProperty(e.field) || h(r, a || e.type)) && i.push(x(f.messages.required, e.fullField));
+  e.required && (!t.hasOwnProperty(e.field) || b(r, a || e.type)) && i.push(F(f.messages.required, e.fullField));
 }, Ae = function(e, r, t, i, f) {
-  (/^\s+$/.test(r) || r === "") && i.push(x(f.messages.whitespace, e.fullField));
+  (/^\s+$/.test(r) || r === "") && i.push(F(f.messages.whitespace, e.fullField));
 }, $, Ee = function() {
   if ($)
     return $;
-  var n = "[a-fA-F\\d:]", e = function(y) {
-    return y && y.includeBoundaries ? "(?:(?<=\\s|^)(?=" + n + ")|(?<=" + n + ")(?=\\s|$))" : "";
+  var n = "[a-fA-F\\d:]", e = function(g) {
+    return g && g.includeBoundaries ? "(?:(?<=\\s|^)(?=" + n + ")|(?<=" + n + ")(?=\\s|$))" : "";
   }, r = "(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}", t = "[a-fA-F\\d]{1,4}", i = (`
 (?:
 (?:` + t + ":){7}(?:" + t + `|:)|                                    // 1:2:3:4:5:6:7::  1:2:3:4:5:6:7:8
@@ -307,15 +311,15 @@ var oe = function(e, r, t, i, f, a) {
 (?:` + t + ":){1}(?:(?::" + t + "){0,4}:" + r + "|(?::" + t + `){1,6}|:)| // 1::              1::3:4:5:6:7:8   1::8            1::3:4:5:6:7:1.2.3.4
 (?::(?:(?::` + t + "){0,5}:" + r + "|(?::" + t + `){1,7}|:))             // ::2:3:4:5:6:7:8  ::2:3:4:5:6:7:8  ::8             ::1.2.3.4
 )(?:%[0-9a-zA-Z]{1,})?                                             // %eth0            %1
-`).replace(/\s*\/\/.*$/gm, "").replace(/\n/g, "").trim(), f = new RegExp("(?:^" + r + "$)|(?:^" + i + "$)"), a = new RegExp("^" + r + "$"), s = new RegExp("^" + i + "$"), o = function(y) {
-    return y && y.exact ? f : new RegExp("(?:" + e(y) + r + e(y) + ")|(?:" + e(y) + i + e(y) + ")", "g");
+`).replace(/\s*\/\/.*$/gm, "").replace(/\n/g, "").trim(), f = new RegExp("(?:^" + r + "$)|(?:^" + i + "$)"), a = new RegExp("^" + r + "$"), s = new RegExp("^" + i + "$"), o = function(g) {
+    return g && g.exact ? f : new RegExp("(?:" + e(g) + r + e(g) + ")|(?:" + e(g) + i + e(g) + ")", "g");
   };
-  o.v4 = function(p) {
-    return p && p.exact ? a : new RegExp("" + e(p) + r + e(p), "g");
-  }, o.v6 = function(p) {
-    return p && p.exact ? s : new RegExp("" + e(p) + i + e(p), "g");
+  o.v4 = function(l) {
+    return l && l.exact ? a : new RegExp("" + e(l) + r + e(l), "g");
+  }, o.v6 = function(l) {
+    return l && l.exact ? s : new RegExp("" + e(l) + i + e(l), "g");
   };
-  var b = "(?:(?:[a-z]+:)?//)", l = "(?:\\S+(?::\\S*)?@)?", m = o.v4().source, g = o.v6().source, O = "(?:(?:[a-z\\u00a1-\\uffff0-9][-_]*)*[a-z\\u00a1-\\uffff0-9]+)", q = "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*", d = "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))", v = "(?::\\d{2,5})?", u = '(?:[/?#][^\\s"]*)?', E = "(?:" + b + "|www\\.)" + l + "(?:localhost|" + m + "|" + g + "|" + O + q + d + ")" + v + u;
+  var h = "(?:(?:[a-z]+:)?//)", p = "(?:\\S+(?::\\S*)?@)?", m = o.v4().source, y = o.v6().source, x = "(?:(?:[a-z\\u00a1-\\uffff0-9][-_]*)*[a-z\\u00a1-\\uffff0-9]+)", O = "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*", d = "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))", v = "(?::\\d{2,5})?", u = '(?:[/?#][^\\s"]*)?', E = "(?:" + h + "|www\\.)" + p + "(?:localhost|" + m + "|" + y + "|" + x + O + d + ")" + v + u;
   return $ = new RegExp("(?:^" + E + "$)", "i"), $;
 }, ne = {
   email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/,
@@ -366,21 +370,21 @@ var oe = function(e, r, t, i, f, a) {
     return;
   }
   var a = ["integer", "float", "array", "regexp", "object", "method", "email", "number", "date", "url", "hex"], s = e.type;
-  a.indexOf(s) > -1 ? T[s](r) || i.push(x(f.messages.types[s], e.fullField, e.type)) : s && typeof r !== e.type && i.push(x(f.messages.types[s], e.fullField, e.type));
+  a.indexOf(s) > -1 ? T[s](r) || i.push(F(f.messages.types[s], e.fullField, e.type)) : s && typeof r !== e.type && i.push(F(f.messages.types[s], e.fullField, e.type));
 }, Pe = function(e, r, t, i, f) {
-  var a = typeof e.len == "number", s = typeof e.min == "number", o = typeof e.max == "number", b = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g, l = r, m = null, g = typeof r == "number", O = typeof r == "string", q = Array.isArray(r);
-  if (g ? m = "number" : O ? m = "string" : q && (m = "array"), !m)
+  var a = typeof e.len == "number", s = typeof e.min == "number", o = typeof e.max == "number", h = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g, p = r, m = null, y = typeof r == "number", x = typeof r == "string", O = Array.isArray(r);
+  if (y ? m = "number" : x ? m = "string" : O && (m = "array"), !m)
     return !1;
-  q && (l = r.length), O && (l = r.replace(b, "_").length), a ? l !== e.len && i.push(x(f.messages[m].len, e.fullField, e.len)) : s && !o && l < e.min ? i.push(x(f.messages[m].min, e.fullField, e.min)) : o && !s && l > e.max ? i.push(x(f.messages[m].max, e.fullField, e.max)) : s && o && (l < e.min || l > e.max) && i.push(x(f.messages[m].range, e.fullField, e.min, e.max));
+  O && (p = r.length), x && (p = r.replace(h, "_").length), a ? p !== e.len && i.push(F(f.messages[m].len, e.fullField, e.len)) : s && !o && p < e.min ? i.push(F(f.messages[m].min, e.fullField, e.min)) : o && !s && p > e.max ? i.push(F(f.messages[m].max, e.fullField, e.max)) : s && o && (p < e.min || p > e.max) && i.push(F(f.messages[m].range, e.fullField, e.min, e.max));
 }, S = "enum", je = function(e, r, t, i, f) {
-  e[S] = Array.isArray(e[S]) ? e[S] : [], e[S].indexOf(r) === -1 && i.push(x(f.messages[S], e.fullField, e[S].join(", ")));
+  e[S] = Array.isArray(e[S]) ? e[S] : [], e[S].indexOf(r) === -1 && i.push(F(f.messages[S], e.fullField, e[S].join(", ")));
 }, Re = function(e, r, t, i, f) {
   if (e.pattern) {
     if (e.pattern instanceof RegExp)
-      e.pattern.lastIndex = 0, e.pattern.test(r) || i.push(x(f.messages.pattern.mismatch, e.fullField, r, e.pattern));
+      e.pattern.lastIndex = 0, e.pattern.test(r) || i.push(F(f.messages.pattern.mismatch, e.fullField, r, e.pattern));
     else if (typeof e.pattern == "string") {
       var a = new RegExp(e.pattern);
-      a.test(r) || i.push(x(f.messages.pattern.mismatch, e.fullField, r, e.pattern));
+      a.test(r) || i.push(F(f.messages.pattern.mismatch, e.fullField, r, e.pattern));
     }
   }
 }, c = {
@@ -393,15 +397,15 @@ var oe = function(e, r, t, i, f, a) {
 }, Se = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r, "string") && !e.required)
+    if (b(r, "string") && !e.required)
       return t();
-    c.required(e, r, i, a, f, "string"), h(r, "string") || (c.type(e, r, i, a, f), c.range(e, r, i, a, f), c.pattern(e, r, i, a, f), e.whitespace === !0 && c.whitespace(e, r, i, a, f));
+    c.required(e, r, i, a, f, "string"), b(r, "string") || (c.type(e, r, i, a, f), c.range(e, r, i, a, f), c.pattern(e, r, i, a, f), e.whitespace === !0 && c.whitespace(e, r, i, a, f));
   }
   t(a);
 }, Ne = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && c.type(e, r, i, a, f);
   }
@@ -409,7 +413,7 @@ var oe = function(e, r, t, i, f, a) {
 }, De = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (r === "" && (r = void 0), h(r) && !e.required)
+    if (r === "" && (r = void 0), b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && (c.type(e, r, i, a, f), c.range(e, r, i, a, f));
   }
@@ -417,7 +421,7 @@ var oe = function(e, r, t, i, f, a) {
 }, Te = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && c.type(e, r, i, a, f);
   }
@@ -425,15 +429,15 @@ var oe = function(e, r, t, i, f, a) {
 }, Ve = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
-    c.required(e, r, i, a, f), h(r) || c.type(e, r, i, a, f);
+    c.required(e, r, i, a, f), b(r) || c.type(e, r, i, a, f);
   }
   t(a);
 }, Ie = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && (c.type(e, r, i, a, f), c.range(e, r, i, a, f));
   }
@@ -441,7 +445,7 @@ var oe = function(e, r, t, i, f, a) {
 }, Me = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && (c.type(e, r, i, a, f), c.range(e, r, i, a, f));
   }
@@ -457,7 +461,7 @@ var oe = function(e, r, t, i, f, a) {
 }, Le = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && c.type(e, r, i, a, f);
   }
@@ -465,7 +469,7 @@ var oe = function(e, r, t, i, f, a) {
 }, ze = "enum", Be = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f), r !== void 0 && c[ze](e, r, i, a, f);
   }
@@ -473,17 +477,17 @@ var oe = function(e, r, t, i, f, a) {
 }, Ue = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r, "string") && !e.required)
+    if (b(r, "string") && !e.required)
       return t();
-    c.required(e, r, i, a, f), h(r, "string") || c.pattern(e, r, i, a, f);
+    c.required(e, r, i, a, f), b(r, "string") || c.pattern(e, r, i, a, f);
   }
   t(a);
 }, Je = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r, "date") && !e.required)
+    if (b(r, "date") && !e.required)
       return t();
-    if (c.required(e, r, i, a, f), !h(r, "date")) {
+    if (c.required(e, r, i, a, f), !b(r, "date")) {
       var o;
       r instanceof Date ? o = r : o = new Date(r), c.type(e, o, i, a, f), o && c.range(e, o.getTime(), i, a, f);
     }
@@ -495,15 +499,15 @@ var oe = function(e, r, t, i, f, a) {
 }, z = function(e, r, t, i, f) {
   var a = e.type, s = [], o = e.required || !e.required && i.hasOwnProperty(e.field);
   if (o) {
-    if (h(r, a) && !e.required)
+    if (b(r, a) && !e.required)
       return t();
-    c.required(e, r, i, s, f, a), h(r, a) || c.type(e, r, i, s, f);
+    c.required(e, r, i, s, f, a), b(r, a) || c.type(e, r, i, s, f);
   }
   t(s);
 }, Ze = function(e, r, t, i, f) {
   var a = [], s = e.required || !e.required && i.hasOwnProperty(e.field);
   if (s) {
-    if (h(r) && !e.required)
+    if (b(r) && !e.required)
       return t();
     c.required(e, r, i, a, f);
   }
@@ -601,64 +605,64 @@ var G = Y(), M = /* @__PURE__ */ function() {
     var a = this;
     i === void 0 && (i = {}), f === void 0 && (f = function() {
     });
-    var s = t, o = i, b = f;
-    if (typeof o == "function" && (b = o, o = {}), !this.rules || Object.keys(this.rules).length === 0)
-      return b && b(null, s), Promise.resolve(s);
-    function l(d) {
+    var s = t, o = i, h = f;
+    if (typeof o == "function" && (h = o, o = {}), !this.rules || Object.keys(this.rules).length === 0)
+      return h && h(null, s), Promise.resolve(s);
+    function p(d) {
       var v = [], u = {};
-      function E(y) {
-        if (Array.isArray(y)) {
-          var F;
-          v = (F = v).concat.apply(F, y);
+      function E(g) {
+        if (Array.isArray(g)) {
+          var q;
+          v = (q = v).concat.apply(q, g);
         } else
-          v.push(y);
+          v.push(g);
       }
-      for (var p = 0; p < d.length; p++)
-        E(d[p]);
-      v.length ? (u = Z(v), b(v, u)) : b(null, s);
+      for (var l = 0; l < d.length; l++)
+        E(d[l]);
+      v.length ? (u = Z(v), h(v, u)) : h(null, s);
     }
     if (o.messages) {
       var m = this.messages();
       m === G && (m = Y()), te(m, o.messages), o.messages = m;
     } else
       o.messages = this.messages();
-    var g = {}, O = o.keys || Object.keys(this.rules);
-    O.forEach(function(d) {
+    var y = {}, x = o.keys || Object.keys(this.rules);
+    x.forEach(function(d) {
       var v = a.rules[d], u = s[d];
       v.forEach(function(E) {
-        var p = E;
-        typeof p.transform == "function" && (s === t && (s = R({}, s)), u = s[d] = p.transform(u)), typeof p == "function" ? p = {
-          validator: p
-        } : p = R({}, p), p.validator = a.getValidationMethod(p), p.validator && (p.field = d, p.fullField = p.fullField || d, p.type = a.getType(p), g[d] = g[d] || [], g[d].push({
-          rule: p,
+        var l = E;
+        typeof l.transform == "function" && (s === t && (s = R({}, s)), u = s[d] = l.transform(u)), typeof l == "function" ? l = {
+          validator: l
+        } : l = R({}, l), l.validator = a.getValidationMethod(l), l.validator && (l.field = d, l.fullField = l.fullField || d, l.type = a.getType(l), y[d] = y[d] || [], y[d].push({
+          rule: l,
           value: u,
           source: s,
           field: d
         }));
       });
     });
-    var q = {};
-    return Fe(g, o, function(d, v) {
+    var O = {};
+    return Fe(y, o, function(d, v) {
       var u = d.rule, E = (u.type === "object" || u.type === "array") && (typeof u.fields == "object" || typeof u.defaultField == "object");
       E = E && (u.required || !u.required && d.value), u.field = d.field;
-      function p(w, j) {
+      function l(w, j) {
         return R({}, j, {
           fullField: u.fullField + "." + w,
           fullFields: u.fullFields ? [].concat(u.fullFields, [w]) : [w]
         });
       }
-      function y(w) {
+      function g(w) {
         w === void 0 && (w = []);
         var j = Array.isArray(w) ? w : [w];
         !o.suppressWarning && j.length && n.warning("async-validator:", j), j.length && u.message !== void 0 && (j = [].concat(u.message));
         var _ = j.map(re(u, s));
         if (o.first && _.length)
-          return q[u.field] = 1, v(_);
+          return O[u.field] = 1, v(_);
         if (!E)
           v(_);
         else {
           if (u.required && !d.value)
-            return u.message !== void 0 ? _ = [].concat(u.message).map(re(u, s)) : o.error && (_ = [o.error(u, x(o.messages.required, u.field))]), v(_);
+            return u.message !== void 0 ? _ = [].concat(u.message).map(re(u, s)) : o.error && (_ = [o.error(u, F(o.messages.required, u.field))]), v(_);
           var D = {};
           u.defaultField && Object.keys(d.value).map(function(P) {
             D[P] = u.defaultField;
@@ -666,7 +670,7 @@ var G = Y(), M = /* @__PURE__ */ function() {
           var K = {};
           Object.keys(D).forEach(function(P) {
             var A = D[P], ue = Array.isArray(A) ? A : [A];
-            K[P] = ue.map(p.bind(null, P));
+            K[P] = ue.map(l.bind(null, P));
           });
           var X = new n(K);
           X.messages(o.messages), d.rule.options && (d.rule.options.messages = o.messages, d.rule.options.error = o.error), X.validate(d.value, d.rule.options || o, function(P) {
@@ -675,30 +679,30 @@ var G = Y(), M = /* @__PURE__ */ function() {
           });
         }
       }
-      var F;
+      var q;
       if (u.asyncValidator)
-        F = u.asyncValidator(u, d.value, y, d.source, o);
+        q = u.asyncValidator(u, d.value, g, d.source, o);
       else if (u.validator) {
         try {
-          F = u.validator(u, d.value, y, d.source, o);
+          q = u.validator(u, d.value, g, d.source, o);
         } catch (w) {
           console.error == null || console.error(w), o.suppressValidatorError || setTimeout(function() {
             throw w;
-          }, 0), y(w.message);
+          }, 0), g(w.message);
         }
-        F === !0 ? y() : F === !1 ? y(typeof u.message == "function" ? u.message(u.fullField || u.field) : u.message || (u.fullField || u.field) + " fails") : F instanceof Array ? y(F) : F instanceof Error && y(F.message);
+        q === !0 ? g() : q === !1 ? g(typeof u.message == "function" ? u.message(u.fullField || u.field) : u.message || (u.fullField || u.field) + " fails") : q instanceof Array ? g(q) : q instanceof Error && g(q.message);
       }
-      F && F.then && F.then(function() {
-        return y();
+      q && q.then && q.then(function() {
+        return g();
       }, function(w) {
-        return y(w);
+        return g(w);
       });
     }, function(d) {
-      l(d);
+      p(d);
     }, s);
   }, e.getType = function(t) {
     if (t.type === void 0 && t.pattern instanceof RegExp && (t.type = "pattern"), typeof t.validator != "function" && t.type && !V.hasOwnProperty(t.type))
-      throw new Error(x("Unknown rule type %s", t.type));
+      throw new Error(F("Unknown rule type %s", t.type));
     return t.type || "string";
   }, e.getValidationMethod = function(t) {
     if (typeof t.validator == "function")
@@ -722,56 +726,58 @@ const ie = ae({
     slots: e
   }) {
     const {
-      error: r
-    } = de(n), t = C("LABEL_DATA"), i = B(() => ({
+      error: r,
+      hidden: t
+    } = de(n), i = C("LABEL_DATA"), f = B(() => ({
       "s-form__item": !0,
-      "s-form__item--horizontal": t.value.layout === "horizontal",
-      "s-form__item--vertical": t.value.layout === "vertical"
-    })), f = B(() => ({
+      "s-form__item--hidden": t.value,
+      "s-form__item--horizontal": i.value.layout === "horizontal",
+      "s-form__item--vertical": i.value.layout === "vertical"
+    })), a = B(() => ({
       "s-form__label": !0,
-      "s-form__label--vertical": t.value.layout === "vertical",
-      [`s-form__label--${t.value.labelAlign}`]: t.value.layout === "horizontal",
-      [`s-form__label--${t.value.labelSize}`]: t.value.layout === "horizontal"
-    })), a = C(fe), s = H(!1), o = H(""), l = {
+      "s-form__label--vertical": i.value.layout === "vertical",
+      [`s-form__label--${i.value.labelAlign}`]: i.value.layout === "horizontal",
+      [`s-form__label--${i.value.labelSize}`]: i.value.layout === "horizontal"
+    })), s = C(fe), o = H(!1), h = H(""), m = {
       validate: () => {
-        if (!a)
+        if (!s)
           return console.warn("请在Form中使用FormItem"), Promise.reject("请在Form中使用FormItem");
-        if (!a.rules)
+        if (!s.rules)
           return Promise.resolve({
             result: !0
           });
         if (!n.prop)
           return console.warn("如果要校验当前项，请设置prop字段"), Promise.reject("如果要校验当前项，请设置prop字段");
-        const m = a.rules[n.prop] || void 0;
-        if (!m)
+        const y = s.rules[n.prop] || void 0;
+        if (!y)
           return Promise.resolve({
             result: !0
           });
-        const g = a.model[n.prop];
+        const x = s.model[n.prop];
         return new M({
-          [n.prop]: m
+          [n.prop]: y
         }).validate({
-          [n.prop]: g
-        }, (q) => {
-          q ? (s.value = !0, o.value = q[0].message || "校验错误") : (s.value = !1, o.value = "");
+          [n.prop]: x
+        }, (d) => {
+          d ? (o.value = !0, h.value = d[0].message || "校验错误") : (o.value = !1, h.value = "");
         });
       }
     };
-    return U("FORM_ITEM_CTX", l), ce(() => {
-      n.prop && (a == null || a.addItem(l));
+    return U("FORM_ITEM_CTX", m), ce(() => {
+      n.prop && (s == null || s.addItem(m));
     }), le(() => {
-      n.prop && (a == null || a.removeItem(l));
+      n.prop && (s == null || s.removeItem(m));
     }), () => {
-      var m;
+      var y;
       return N("div", {
-        class: i.value
-      }, [N("span", {
         class: f.value
-      }, [n.label]), N("div", null, [(m = e.default) == null ? void 0 : m.call(e)]), r.value && N("div", {
+      }, [N("span", {
+        class: a.value
+      }, [n.label]), N("div", null, [(y = e.default) == null ? void 0 : y.call(e)]), r.value && N("div", {
         class: "error-message"
-      }, [r.value]), s.value && N("div", {
+      }, [r.value]), o.value && N("div", {
         class: "error-message"
-      }, [o.value])]);
+      }, [h.value])]);
     };
   }
 }), Ge = {
